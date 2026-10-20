@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { roundUp, quantity, parseAmount, forecastMonths, shouldBuy } from '../server/engine.js';
+import { roundUp, quantity, parseAmount, forecastMonths, shouldBuy } from '../public/engine.js';
 
 test('roundUp rounds up to the step and applies the multiplier', () => {
   assert.deepEqual(roundUp(640, 100), { rounded: 700, roundup: 60 });

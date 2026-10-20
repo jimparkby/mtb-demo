@@ -1,4 +1,7 @@
-// Клиент демо Moby × KOPI: все расчёты и данные — на сервере (/api), здесь только отображение.
+// Демо Moby × KOPI целиком в браузере: банк и копилка — bank.js, живой курс — rates.js.
+import { createBank } from './bank.js';
+import { createRates } from './rates.js';
+
 const PRESETS = [['Кофе', 640], ['Шаурма', 990], ['Такси', 1280], ['Продукты', 4730], ['Онлайн-заказ', 8915], ['Фастфуд', 1475]];
 const TOPUPS = [2000, 5000, 10000, 50000];
 const $ = (id) => document.getElementById(id);
@@ -7,29 +10,20 @@ let S = null;
 let ticks = []; // курс за последний час: { t, BTC, ETH }
 let prev = null; // прошлое состояние — чтобы подсветить, что выросло, а что упало
 
-// Небольшие настройки посетителя: токен гостя, скрытый баланс, прочитанные уведомления
+// Настройки посетителя: скрытый баланс, прочитанные уведомления. В приватном режиме
+// localStorage может быть недоступен — тогда демо живёт до перезагрузки страницы.
 const store = {
   get(k) { try { return localStorage.getItem('moby.' + k); } catch { return null; } },
   set(k, v) { try { if (v == null) localStorage.removeItem('moby.' + k); else localStorage.setItem('moby.' + k, v); } catch { /* приватный режим */ } },
 };
+const memory = new Map();
+const json = {
+  get(k) { try { return JSON.parse(store.get(k)) ?? memory.get(k) ?? null; } catch { return memory.get(k) ?? null; } },
+  set(k, v) { memory.set(k, v); store.set(k, JSON.stringify(v)); },
+};
 
-// Гостевая сессия: у каждого посетителя своя копия демо. Без токена сервер отвечает общим демо.
-let token = store.get('token');
-function setToken(t) { token = t; store.set('token', t); }
-
-async function api(method, path, body) {
-  const headers = {};
-  if (body) headers['content-type'] = 'application/json';
-  if (token) headers.authorization = 'Bearer ' + token;
-  const res = await fetch(path, { method, headers, body: body ? JSON.stringify(body) : undefined });
-  const data = await res.json().catch(() => ({}));
-  if (res.status === 401 && token && !path.startsWith('/api/auth/')) {
-    setToken(null); // гостевая сессия истекла — молча берём новую
-    setTimeout(() => reload(), 0);
-  }
-  if (!res.ok) throw new Error(data.error || `Ошибка сервера (${res.status})`);
-  return data;
-}
+const rates = createRates({ storage: json });
+const bank = createBank({ storage: json, rates });
 
 const fmt = (k) => (k / 100).toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const fmtInt = (k) => Math.round(k / 100).toLocaleString('ru-RU');
@@ -294,7 +288,7 @@ function render() {
 // ---------- Настройки копилки ----------
 
 async function patchSettings(patch) {
-  try { S = await api('PATCH', '/api/settings', patch); render(); }
+  try { S = await bank.updateSettings(patch); render(); }
   catch (e) { toast('Не удалось сохранить', e.message); }
 }
 
@@ -335,7 +329,7 @@ function saveGoal() {
     const name = $('goalNameInput').value.trim();
     const n = parseInt($('goalAmountInput').value.replace(/\D/g, ''), 10);
     if (!name || !(n > 0)) return;
-    try { S = await api('PUT', '/api/goal', { name, target: n * 100 }); render(); }
+    try { S = await bank.updateGoal({ name, target: n * 100 }); render(); }
     catch (e) { toast('Цель не сохранена', e.message); }
   }, 400);
 }
@@ -346,12 +340,12 @@ let resetArmed = false;
 $('resetBtn').onclick = async (e) => {
   if (!resetArmed) { resetArmed = true; e.target.textContent = 'Нажмите ещё раз, чтобы сбросить'; setTimeout(() => { resetArmed = false; e.target.textContent = 'Начать демо заново'; }, 3000); return; }
   resetArmed = false; e.target.textContent = 'Начать демо заново';
-  try { S = await api('POST', '/api/reset'); store.set('seen', null); render(); toast('Демо сброшено', 'Снова неделя покупок Ивана'); }
+  try { S = await bank.reset(); store.set('seen', null); render(); toast('Демо сброшено', 'Снова неделя покупок Ивана'); }
   catch (err) { toast('Не удалось сбросить', err.message); }
 };
 
 $('buyNow').onclick = async () => {
-  try { const r = await api('POST', '/api/purchases'); S = r.state; render(); toastPurchase(r.purchase); }
+  try { const r = await bank.buyNow(); S = r.state; render(); toastPurchase(r.purchase); }
   catch (e) { toast('Покупка не прошла', e.message); }
 };
 
@@ -370,7 +364,7 @@ async function pay(merchant) {
   const err = $('payError'), btn = $('payBtn');
   busy = true; btn.disabled = true; err.textContent = '';
   try {
-    const r = await api('POST', '/api/payments', { merchant, amount: $('amountInput').value });
+    const r = await bank.payment({ merchant, amount: $('amountInput').value });
     S = r.state; render();
     const { payment: p, purchase } = r;
     const rc = $('receipt'); rc.innerHTML = '';
@@ -408,7 +402,7 @@ async function topUp() {
   const err = $('topError'), btn = $('topBtn');
   busy = true; btn.disabled = true; err.textContent = '';
   try {
-    const r = await api('POST', '/api/topups', { title: 'Пополнение с карты другого банка', amount: $('topInput').value });
+    const r = await bank.topUp({ title: 'Пополнение с карты другого банка', amount: $('topInput').value });
     S = r.state; render();
     closeSheet();
     toast('Зачисление ' + fmt(r.topup.amount) + ' BYN', 'Доступно ' + fmt(S.account.balance) + ' BYN');
@@ -511,33 +505,21 @@ else if (['kopi', 'kopiSettings', 'rates', 'feed'].includes(hash)) openSub(hash)
 
 // ---------- Загрузка и живое обновление ----------
 
-// Каждый посетитель получает свою копию демо, чтобы зал по QR не мешал друг другу.
-// Если сервер не выдал гостя — показываем общее демо.
-async function ensureSession() {
-  if (token) return;
-  try { setToken((await api('POST', '/api/auth/guest')).token); } catch { /* общее демо без токена */ }
-}
-
-async function reload() {
-  prev = null;
-  await ensureSession();
-  S = await api('GET', '/api/state');
+// Данные у каждого посетителя свои (localStorage), поэтому зал по QR не мешает друг другу
+try {
+  ticks = rates.ticks();
+  S = await bank.state();
   // При первом входе непрочитанными считаются 4 последние операции
   if (store.get('seen') == null && S.feed[4]) store.set('seen', S.feed[4].created_at);
   render();
 }
-
-try {
-  ticks = (await api('GET', '/api/ticks').catch(() => ({ ticks: [] }))).ticks ?? [];
-  await reload();
-}
-catch (e) { toast('Сервер недоступен', e.message); }
+catch (e) { toast('Демо не загрузилось', e.message); }
 
 // Курс и стоимость портфеля обновляются сами, пока вкладка открыта
 const REFRESH_MS = 5_000;
 async function refresh() {
   if (document.hidden || busy) return;
-  try { S = await api('GET', '/api/state'); render(); } catch { /* следующая попытка через REFRESH_MS */ }
+  try { S = await bank.state(); render(); } catch { /* следующая попытка через REFRESH_MS */ }
 }
 setInterval(refresh, REFRESH_MS);
 document.addEventListener('visibilitychange', refresh);
