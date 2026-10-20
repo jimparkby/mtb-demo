@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Moby × KOPI — демо</title>
+<meta name="description" content="Демо: банковское приложение в стиле Moby со встроенной копилкой KOPI — инвестиции со сдачи в BTC, ETH или консервативный актив.">
+<meta name="theme-color" content="#1A1B22">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Unbounded:wght@700;800&display=swap">
+<link rel="icon" href="logo.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="mGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4C8DFF"/><stop offset=".55" stop-color="#7A5CFF"/><stop offset="1" stop-color="#FF4FA3"/></linearGradient>
+  </defs>
+  <symbol id="i-m" viewBox="0 0 24 24"><path d="M3 19V7.5C3 5.6 4.6 4 6.5 4S10 5.6 10 7.5V12l2 2 2-2V7.5C14 5.6 15.6 4 17.5 4S21 5.6 21 7.5V19h-3.5V8.2a.7.7 0 0 0-1.3-.4L12 13.5 7.8 7.8a.7.7 0 0 0-1.3.4V19Z"/></symbol>
+  <symbol id="i-cards" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="3" y="7" width="16" height="11" rx="2"/><path d="M6 4.5h13a2 2 0 0 1 2 2V15M3 11h16"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3 5h14v9H8l-4 3v-3H3z"/><path d="M17 9h4v9h-1v3l-4-3h-6v-4"/><path d="M7 9.5h6"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></symbol>
+  <symbol id="i-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="1.5"/><path d="M3 12h7M15 3v7m-3-3 3 3 3-3"/></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 10h8l-2.5-2.5M16 14H8l2.5 2.5"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M4 9h15a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8a2 2 0 0 1 2-2h9l1-2"/><path d="M16 14.5h1"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/><path d="M4 4l16 16"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 19c1.2-3.2 3.8-5 7-5s5.8 1.8 7 5"/></symbol>
+  <symbol id="i-history" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.4-5.7L4 8.5"/><path d="M4 4v4.5h4.5M12 8v4l3 2"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></symbol>
+  <symbol id="i-clip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 12V7a4 4 0 0 1 8 0v10a6 6 0 0 1-12 0V9"/><path d="M12 8v9"/></symbol>
+  <symbol id="i-smile" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 14.5c1 1.4 2.4 2 4 2s3-.6 4-2M9 9.5v.5M15 9.5v.5"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+  <symbol id="i-credit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M4 8h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zM4 8l11-4 1.5 4"/><path d="M15 14h2"/></symbol>
+  <symbol id="i-deposit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M6 11c0-2 2-3 6-3s6 1 6 3l1.5 7a2 2 0 0 1-2 2.3H6.5A2 2 0 0 1 4.5 18Z"/><path d="M9 8 7.5 5h9L15 8"/><circle cx="8.5" cy="3" r="1"/></symbol>
+  <symbol id="i-case" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M9 7V5h6v2M3 12h18M17 15v4m-2-2h4"/></symbol>
+  <symbol id="i-piggy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M5 11.5C5 8.5 8 6.5 12 6.5c1.4 0 2.6.2 3.7.7L18.5 6v3a4.6 4.6 0 0 1 1.3 2.2H21v3.3h-1.4A6 6 0 0 1 17 17v2.5h-2.5v-1.6a9 9 0 0 1-3.5 0v1.6H8.5V17C6.3 15.8 5 13.8 5 11.5Z"/><path d="M3 10.5c.4 1 1.2 1.4 2 1.4M15.5 10.5h.1M10 6.6V5a2 2 0 0 1 4 0v1.7"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></symbol>
+  <symbol id="i-id" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="11" r="2"/><path d="M5.5 16c.6-1.4 1.6-2 3-2s2.4.6 3 2M14 10h4M14 13.5h4"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M6 3h8l4 4v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M8 12h8M8 16h5"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15Z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></symbol>
+  <symbol id="i-fx" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4.5 9A8 8 0 0 1 19 7.5M19.5 15A8 8 0 0 1 5 16.5"/><path d="M19 3.5v4h-4M5 20.5v-4h4M14 9.5c-.4-.9-1.2-1.3-2-1.3-1.2 0-2 .6-2 1.6 0 2.3 4 1.2 4 3.7 0 1-.9 1.7-2 1.7-1 0-1.8-.5-2.1-1.4M12 7v1.2M12 15.2v1.3"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 0 1 13 0c0 5-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></symbol>
+  <symbol id="i-plus-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5M3 9h18M18 15v6m-3-3h6"/></symbol>
+</svg>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<div class="phone">
+  <!-- ГЛАВНАЯ -->
+  <main class="tab" id="home">
+    <section class="head">
+      <div class="who">
+        <button class="avatar" type="button" data-open="notices" aria-label="Уведомления"><svg><use href="#i-user"/></svg><i class="badge" id="noticeBadge">4</i></button>
+        <b id="userName">…</b>
+        <span class="demo-tag">Демо</span>
+      </div>
+      <div class="pills"><span class="pill" id="accProduct">Prime Line BYN</span><span class="pill num" id="accPan">5*····</span><button class="ico-btn" type="button" data-soon="Реквизиты счёта" aria-label="Реквизиты"><svg><use href="#i-info"/></svg></button></div>
+      <div class="balance-row">
+        <div class="balance num" id="balance">— BYN</div>
+        <button class="ico-btn big" type="button" id="eyeBtn" aria-label="Скрыть баланс"><svg><use href="#i-eye-off"/></svg></button>
+      </div>
+      <div class="actions">
+        <button type="button" data-sheet="topup"><span><svg><use href="#i-in"/></svg></span>Пополнить</button>
+        <button type="button" data-soon="Переводы"><span><svg><use href="#i-swap"/></svg></span>Перевести</button>
+        <button type="button" data-sheet="pay"><span><svg><use href="#i-wallet"/></svg></span>Оплатить</button>
+      </div>
+    </section>
+
+    <div class="last">
+      <button class="hist-btn" type="button" data-open="feed" aria-label="История операций"><svg><use href="#i-history"/></svg></button>
+      <button class="op" type="button" data-open="feed" id="lastOp">
+        <span class="op-ic"><svg><use href="#i-in"/></svg><i></i></span>
+        <span class="op-t"><b>…</b><small>Prime Line BYN</small></span>
+        <span class="op-v num"></span>
+      </button>
+    </div>
+
+    <button class="banner kopi-banner" type="button" data-open="kopi">
+      <span class="coins" aria-hidden="true"><i>₿</i><i>Ξ</i><img src="logo.png" alt=""></span>
+      <span class="bt"><b>КОПИЛКА KOPI</b><small id="bannerKopi">Инвестиции со сдачи с каждой покупки</small></span>
+      <span class="live-dot" id="bannerLive" hidden></span>
+    </button>
+
+    <button class="banner promo" type="button" data-sheet="pay">
+      <span class="promo-t"><b>ОКРУГЛЯЙ<br>И КОПИ</b><small>Оплатите картой — сдача <em>сама уйдёт в инвестиции</em></small><span class="promo-btn">Попробовать оплату<svg><use href="#i-chev"/></svg></span></span>
+      <span class="promo-card" aria-hidden="true"><span class="mini-card"><b>M</b><i>BYN</i></span><span class="mini-coin">+0,60</span></span>
+    </button>
+
+    <div class="accounts">
+      <button class="acc" type="button" data-open="kopi">
+        <span class="acc-ic kopi"><img src="logo.png" alt=""></span>
+        <span><small>KOPI · ИНВЕСТИЦИИ СО СДАЧИ</small><b class="num" id="accKopi">—</b></span>
+        <span class="acc-d num" id="accKopiD"></span>
+      </button>
+      <button class="acc" type="button" data-soon="Валютный счёт">
+        <span class="acc-ic eur"></span>
+        <span><small>PRIME LINE EUR</small><b class="num">5.14 EUR</b></span>
+      </button>
+    </div>
+  </main>
+
+  <!-- ПРОДУКТЫ -->
+  <main class="tab" id="products" hidden>
+    <div class="carousel" id="carousel">
+      <button class="slide s1" type="button" data-open="kopi"><b>Инвестиции<br>со сдачи</b><small>Копилка KOPI округляет покупки и копит в BTC, ETH или рублях</small><img src="logo.png" alt=""></button>
+      <button class="slide s2" type="button" data-sheet="pay"><b>Оплата<br>в один тап</b><small>Эмулятор кассы: проверьте, сколько сдачи накопится</small></button>
+      <button class="slide s3" type="button" data-open="rates"><b>Живой курс<br>BTC и ETH</b><small>С площадок — резидентов ПВТ, обновляется каждые 5 секунд</small></button>
+    </div>
+    <div class="dots" id="dots"><i class="on"></i><i></i><i></i></div>
+    <nav class="plist">
+      <button type="button" data-soon="Карты и счета"><svg><use href="#i-cards"/></svg><span><b>Карты и счета</b><small>Ваши карты и счета</small></span></button>
+      <button type="button" data-soon="Кредиты"><svg><use href="#i-credit"/></svg><span><b>Кредиты</b><small>Ваши кредитные продукты</small></span></button>
+      <button type="button" data-soon="Вклады"><svg><use href="#i-deposit"/></svg><span><b>Вклады</b><small>Ваши сбережения и вклады</small></span></button>
+      <button type="button" data-open="kopi"><svg><use href="#i-piggy"/></svg><span><b>Инвестиции со сдачи <em>NEW</em></b><small id="prodKopi">Копилка KOPI: BTC, ETH или консервативный</small></span></button>
+      <hr>
+      <button type="button" data-soon="Заявки на продукты"><svg><use href="#i-case"/></svg><span><b>Заявки на продукты</b><small>Ваши заявки на кредитные и иные продукты банка</small></span></button>
+    </nav>
+    <button class="wide-btn" type="button" data-open="kopi"><svg><use href="#i-plus-card"/></svg><u>Оформить</u></button>
+  </main>
+
+  <!-- ЧАТ -->
+  <main class="tab chat" id="chat" hidden>
+    <header class="bar"><button class="back" type="button" data-tab="home" aria-label="Назад"><svg><use href="#i-back"/></svg></button><h1>Чат</h1><button class="ico-btn" type="button" data-soon="Поиск по чату" aria-label="Поиск"><svg><use href="#i-search"/></svg></button></header>
+    <div class="msgs" id="msgs"><p class="empty" id="chatEmpty">Отправьте сообщение, чтобы начать чат</p></div>
+    <div class="quick" id="quick"></div>
+    <form class="composer" id="composer">
+      <button class="clip" type="button" data-soon="Вложения" aria-label="Прикрепить"><svg><use href="#i-clip"/></svg></button>
+      <label class="field-msg"><input id="msgInput" placeholder="Новое сообщение" autocomplete="off" aria-label="Новое сообщение"><svg><use href="#i-smile"/></svg></label>
+      <button class="send" type="submit" aria-label="Отправить"><svg><use href="#i-send"/></svg></button>
+    </form>
+  </main>
+
+  <!-- ЕЩЁ -->
+  <main class="tab" id="more" hidden>
+    <nav class="mlist">
+      <button type="button" data-open="kopiSettings"><span class="ring"><svg><use href="#i-gear"/></svg></span>Настройки</button>
+      <button type="button" data-soon="Персональные данные"><span class="ring"><svg><use href="#i-id"/></svg></span>Персональные данные</button>
+      <button type="button" data-soon="Документы"><span class="ring"><svg><use href="#i-doc"/></svg></span>Документы</button>
+      <button type="button" data-open="notices"><span class="ring"><svg><use href="#i-bell"/></svg><i class="badge" id="noticeBadge2">4</i></span>Уведомления</button>
+      <button type="button" data-open="rates"><span class="ring"><svg><use href="#i-fx"/></svg></span>Курсы валют</button>
+      <button type="button" data-open="kopi"><span class="ring kopi"><img src="logo.png" alt=""></span>KOPI. Инвестиции со сдачи</button>
+      <button type="button" data-open="rates"><span class="ring grad"><svg><use href="#i-fx"/></svg></span>Обменник Moby</button>
+      <button type="button" data-soon="Банк на карте"><span class="ring"><svg><use href="#i-pin"/></svg></span>Банк на карте</button>
+      <button type="button" data-open="about"><span class="ring"><svg><use href="#i-info"/></svg></span>О демо</button>
+    </nav>
+    <p class="version">Версия приложения 1.0.196-kopi · демо</p>
+  </main>
+
+  <!-- ПОДЭКРАНЫ -->
+  <section class="page" id="kopi" hidden>
+    <header class="bar"><button class="back" type="button" data-close aria-label="Назад"><svg><use href="#i-back"/></svg></button><h1>Копилка KOPI</h1><button class="ico-btn" type="button" data-open="kopiSettings" aria-label="Настройки копилки"><svg><use href="#i-gear"/></svg></button></header>
+    <div class="sub-body">
+      <div class="card hero">
+        <div class="row"><span class="label">Инвестировано со сдачи</span><span class="live" id="liveBadge" hidden><i></i><span id="liveSrc"></span></span></div>
+        <div class="big num" id="totalValue">0</div>
+        <div class="row"><span class="num" id="investedLine"></span><span class="delta num" id="deltaLine"></span></div>
+        <svg class="spark" id="spark" viewBox="0 0 300 64" preserveAspectRatio="none" aria-hidden="true"><path class="area"></path><path class="line"></path></svg>
+        <div class="row"><span class="note num" id="sparkFrom"></span><span class="note num" id="sparkDelta"></span></div>
+      </div>
+
+      <div class="card">
+        <div class="row"><span class="label">Копилка сдачи</span><span class="note num" id="assetNow"></span></div>
+        <div class="row"><b class="num" style="font-size:22px" id="piggy">0</b><span class="note num" id="piggyOf"></span></div>
+        <div class="bar-p"><i id="piggyBar" style="width:0"></i></div>
+        <div class="two-btn"><button class="btn" id="payFromKopi" type="button" data-sheet="pay">Оплатить картой</button><button class="btn secondary" id="buyNow" type="button">Купить сейчас</button></div>
+      </div>
+
+      <div class="card">
+        <div class="row"><span class="label">Цель</span><span class="note num" id="goalPct"></span></div>
+        <div class="row"><b id="goalName" style="font-size:17px"></b><span class="num" id="goalOf"></span></div>
+        <div class="bar-p"><i id="goalBar" style="width:0"></i></div>
+        <span class="note" id="goalHint"></span>
+      </div>
+
+      <div class="card">
+        <span class="label">Портфель</span>
+        <div class="assets" id="assets"></div>
+      </div>
+
+      <div class="card">
+        <div class="row"><span class="label">Округления и покупки</span><span class="note" id="histCount"></span></div>
+        <div class="hist" id="hist"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="kopiSettings" hidden>
+    <header class="bar"><button class="back" type="button" data-close aria-label="Назад"><svg><use href="#i-back"/></svg></button><h1>Настройки копилки</h1><span></span></header>
+    <div class="sub-body">
+      <div class="card">
+        <span class="label">Округлять до</span>
+        <div class="chips" id="steps"></div>
+        <span class="label">Множитель сдачи</span>
+        <div class="chips" id="mults"></div>
+      </div>
+      <div class="card">
+        <span class="label">Куда вкладывать</span>
+        <div class="opts" id="assetOpts"></div>
+      </div>
+      <div class="card">
+        <span class="label">Покупать пакетом, когда в копилке</span>
+        <div class="chips" id="thresholds"></div>
+        <span class="note">Сдача копится и покупается одной операцией, чтобы комиссия не съедала копейки.</span>
+      </div>
+      <div class="card">
+        <span class="label">Цель накопления</span>
+        <div class="two">
+          <div class="field"><label class="note" for="goalNameInput">Название</label><input id="goalNameInput" maxlength="24"></div>
+          <div class="field"><label class="note" for="goalAmountInput">Сумма, BYN</label><input id="goalAmountInput" inputmode="numeric"></div>
+        </div>
+      </div>
+      <div class="card">
+        <span class="note" id="rateNote">Демо: оплаты эмулируются, деньги не списываются. Курс загружается…</span>
+        <button class="btn secondary" id="resetBtn" type="button">Начать демо заново</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="feed" hidden>
+    <header class="bar"><button class="back" type="button" data-close aria-label="Назад"><svg><use href="#i-back"/></svg></button><h1>История операций</h1><span></span></header>
+    <div class="sub-body"><div class="card"><div class="ops" id="feedList"></div></div></div>
+  </section>
+
+  <section class="page" id="rates" hidden>
+    <header class="bar"><button class="back" type="button" data-close aria-label="Назад"><svg><use href="#i-back"/></svg></button><h1>Курсы валют</h1><span></span></header>
+    <div class="sub-body">
+      <div class="card"><div class="row"><span class="label">Криптовалюта, BYN</span><span class="live on-card" id="ratesLive"></span></div><div class="assets" id="ratesList"></div><span class="note" id="ratesNote"></span></div>
+    </div>
+  </section>
+
+  <section class="page" id="notices" hidden>
+    <header class="bar"><button class="back" type="button" data-close aria-label="Назад"><svg><use href="#i-back"/></svg></button><h1>Уведомления</h1><span></span></header>
+    <div class="sub-body"><div class="card"><div class="ops" id="noticeList"></div></div></div>
+  </section>
+
+  <section class="page" id="about" hidden>
+    <header class="bar"><button class="back" type="button" data-close aria-label="Назад"><svg><use href="#i-back"/></svg></button><h1>О демо</h1><span></span></header>
+    <div class="sub-body">
+      <div class="card">
+        <b style="font-size:17px">Moby × KOPI</b>
+        <p class="note" style="font-size:14px;margin:0">Демо-прототип: как копилка KOPI выглядит внутри банковского приложения. Оплаты, пополнения и остаток на карте эмулируются, реальные деньги не участвуют. Курсы BTC и ETH — настоящие.</p>
+        <p class="note" style="font-size:14px;margin:0">Каждый посетитель получает свою копию данных, поэтому по QR на презентации все могут нажимать одновременно.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ШТОРКИ -->
+  <div class="scrim" id="scrim" hidden></div>
+  <section class="sheet" id="pay" hidden role="dialog" aria-labelledby="payTitle">
+    <div class="grip"></div>
+    <h2 id="payTitle">Оплата картой</h2>
+    <div class="paycard">
+      <div class="row"><svg class="mlogo"><use href="#i-m"/></svg><span class="meta" id="cardRule"></span></div>
+      <div class="pan num" id="cardPan">•••• •••• •••• ••••</div>
+      <div class="row"><span class="meta" id="cardHolder"></span><span class="meta num" id="cardBal"></span></div>
+    </div>
+    <label class="amount" for="amountInput"><input id="amountInput" inputmode="decimal" autocomplete="off" value="6,40" aria-label="Сумма покупки, BYN"><span>BYN</span></label>
+    <div class="chips" id="presets"></div>
+    <button class="btn" id="payBtn" type="button">Оплатить</button>
+    <span class="err" id="payError" role="alert"></span>
+    <div class="receipt" id="receipt" hidden></div>
+  </section>
+
+  <section class="sheet" id="topup" hidden role="dialog" aria-labelledby="topTitle">
+    <div class="grip"></div>
+    <h2 id="topTitle">Пополнить карту</h2>
+    <label class="amount" for="topInput"><input id="topInput" inputmode="decimal" autocomplete="off" value="50" aria-label="Сумма пополнения, BYN"><span>BYN</span></label>
+    <div class="chips" id="topPresets"></div>
+    <button class="btn" id="topBtn" type="button">Пополнить</button>
+    <span class="err" id="topError" role="alert"></span>
+    <span class="note">Демо: пополнение эмулируется, деньги не переводятся.</span>
+  </section>
+
+  <nav class="dock" id="dock">
+    <button type="button" data-tab="home" aria-current="page"><svg class="m"><use href="#i-m"/></svg>Главная</button>
+    <button type="button" data-tab="products"><svg><use href="#i-cards"/></svg>Продукты</button>
+    <button type="button" data-tab="chat"><svg><use href="#i-chat"/></svg>Чат</button>
+    <button type="button" data-tab="more"><svg><use href="#i-more"/></svg>Ещё<i class="badge" id="noticeBadge3">4</i></button>
+  </nav>
+</div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
